@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leave Application Form</title>
+    <style>
+        /* body {
+          font-family: "Arial", sans-serif;
+          background-color: #121212;
+          color: #ffffff;
+          margin: 0;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: auto;
+        }
+  
+        .formstart {
+          font-family: "Arial", sans-serif;
+          background-color: #121212;
+          color: #ffffff;
+   
+          display: flex;
+        Increase the max-width for better visibility on larger screens
+          justify-content: center;
+          align-items: center;
+     
+        } */
+        body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    .formstart {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .last {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212;
+      color: #ffffff;
+      margin-top: 100px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    form {
+      width: 100%;
+      max-width: 600px;
+      background-color: #1f1f1f;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 16px;
+      border: 1px solid #444;
+      border-radius: 5px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    .switch {
+      display: none;
+    }
+
+    button {
+      background-color: #8e44ad;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #6c3483;
+    }
+
+    /* .navigate-btn {
+      align-self: flex-end;
+    } */
+
+    .navigate-btn2 {
+      margin: 40px;
+    }
+      </style>
+  </head>
+  <body>
+   <h1 class="last" style="color: #8e44ad;">FORM FOR LEAVE APPLICATION</h1> 
+
+    <div class="formstart">
+      <form id="leaveForm">
+        <label for="facultyName">Faculty Name:</label>
+        <input type="text" id="facultyName" name="facultyName" required />
+
+        <label for="facultyUniqueId">Faculty Unique ID:</label>
+        <input
+          type="text"
+          id="facultyUniqueId"
+          name="facultyUniqueId"
+          required
+        />
+
+        <label for="department">Department:</label>
+        <select id="department" name="department">
+          <option value="CSE">CSE</option>
+          <option value="ELECTRICAL">Electrical</option>
+          <option value="CIVIL">Civil</option>
+          <option value="FY">FY</option>
+        </select>
+
+        <label for="year">Year:</label>
+        <select id="year" name="year">
+          <option value="fy">FY</option>
+          <option value="sy">SY</option>
+          <option value="ty">TY</option>
+          <option value="btech">B.Tech</option>
+        </select>
+
+        <label for="subjectName">Subject Name:</label>
+        <input type="text" id="subjectName" name="subjectName" required />
+
+        <label for="startLeaveDate">Start Leave Date:</label>
+        <input type="date" id="startLeaveDate" name="startLeaveDate" required />
+
+        <label for="endLeaveDate">End Leave Date:</label>
+        <input type="date" id="endLeaveDate" name="endLeaveDate" required />
+
+        <label for="leaveType">Type of Leave:</label>
+        <select id="leaveType" name="leaveType">
+          <option value="medical">Medical</option>
+          <option value="personal">Personal</option>
+        </select>
+
+        <label for="reason">Reason:</label>
+        <input id="reason" name="reason" rows="4" required></input>
+
+        <label for="otherInfo">Other Info:</label>
+        <input id="otherInfo" name="otherInfo" rows="4"></input>
+
+       
+        <!-- <label class="switch"> -->
+          <input type="checkbox" class="switch" id="approvalSwitch">
+          <span class="slider"></span>
+        <!-- </label> -->
+
+        <button type="submit">Submit</button>
+      </form>
+
+
+    
+
+
+      <div id="dataList"></div>
+
+<div class="last">
+
+  <button class="navigate-btn" onclick="history()">see history</button>
+
+      <button class="navigate-btn2" onclick="navigateToLeaveApproval()">Leave Approval Page</button>
+
+    </div>
+
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+  
+
+    <script>
+    //   document
+    //     .getElementById("leaveForm")
+    //     .addEventListener("submit", function (event) {
+    //       event.preventDefault();
+
+
+
+    //    let formData = {
+    //         facultyName: document.getElementById("facultyName").value,
+    //         facultyUniqueId: document.getElementById("facultyUniqueId").value,
+    //         department: document.getElementById("department").value,
+    //         year: document.getElementById("year").value,
+    //         subjectName: document.getElementById("subjectName").value,
+    //         startLeaveDate: document.getElementById("startLeaveDate").value,
+    //         endLeaveDate: document.getElementById("endLeaveDate").value,
+    //         leaveType: document.getElementById("leaveType").value,
+    //         reason: document.getElementById("reason").value,
+    //         otherInfo: document.getElementById("otherInfo").value,
+    //         status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending"
+
+    //       };
+
+
+       
+    //       console.log(formData);
+
+    //       document.getElementById("facultyName").value = "";
+    // document.getElementById("facultyUniqueId").value = "";
+    // document.getElementById("department").value = "";
+    // document.getElementById("year").value = "";
+    // document.getElementById("subjectName").value = "";
+    // document.getElementById("startLeaveDate").value = "";
+    // document.getElementById("endLeaveDate").value = "";
+    // document.getElementById("leaveType").value = "";
+    // document.getElementById("reason").value = "";
+    // document.getElementById("otherInfo").value = "";
+    // document.getElementById("approvalSwitch").checked = false;
+    //     });
+//     const firebaseConfig = {
+//       // Your Firebase configuration here
+   
+//   apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
+//   authDomain: "test2-5bbcd.firebaseapp.com",
+//   projectId: "test2-5bbcd",
+//   storageBucket: "test2-5bbcd.appspot.com",
+//   messagingSenderId: "825583645874",
+//   appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
+//   measurementId: "G-B3HKML6191"
+// };
+
+
+
+
+
+const firebaseConfig = {
+      // Your Firebase configuration here
+   
+  apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
+  authDomain: "test2-5bbcd.firebaseapp.com",
+  projectId: "test2-5bbcd",
+  storageBucket: "test2-5bbcd.appspot.com",
+  messagingSenderId: "825583645874",
+  appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
+  measurementId: "G-B3HKML6191"
+};
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    function navigateToLeaveApproval() {
+      window.location.href = 'admin.html';
+    }
+
+    function history() {
+      window.location.href = 'history.html';
+    }
+
+    document.getElementById("leaveForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      let formData = {
+        facultyName: document.getElementById("facultyName").value,
+        facultyUniqueId: document.getElementById("facultyUniqueId").value,
+        department: document.getElementById("department").value,
+        year: document.getElementById("year").value,
+        subjectName: document.getElementById("subjectName").value,
+        startLeaveDate: document.getElementById("startLeaveDate").value,
+        endLeaveDate: document.getElementById("endLeaveDate").value,
+        leaveType: document.getElementById("leaveType").value,
+        reason: document.getElementById("reason").value,
+        otherInfo: document.getElementById("otherInfo").value,
+        status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending",
+      };
+
+      // Push the form data to the 'leaveApplications' node in Firebase
+      database.ref("leaveApplications").push(formData);
+      console.log("Form data submitted to Firebase!");
+
+      // Clear the form fields
+      document.getElementById("facultyName").value = "";
+      document.getElementById("facultyUniqueId").value = "";
+      document.getElementById("department").value = "";
+      document.getElementById("year").value = "";
+      document.getElementById("subjectName").value = "";
+      document.getElementById("startLeaveDate").value = "";
+      document.getElementById("endLeaveDate").value = "";
+      document.getElementById("leaveType").value = "";
+      document.getElementById("reason").value = "";
+      document.getElementById("otherInfo").value = "";
+      document.getElementById("approvalSwitch").checked = false;
+
+      // Fetch and display all data after form submission
+    //   fetchAllData();
+    });
+
+    // Function to fetch all data from Firebase
+    // function fetchAllData() {
+    //   const dataListContainer = document.getElementById("dataList");
+
+    //   database.ref("leaveApplications").on("value", (snapshot) => {
+    //     const allData = snapshot.val();
+    //     if (allData) {
+    //       // Clear previous data
+    //       dataListContainer.innerHTML = "";
+
+    //       // Loop through data and display on the page
+    //       Object.keys(allData).forEach((dataId) => {
+    //         const leaveApplications = allData[dataId];
+    //         const dataInfoDiv = document.createElement("div");
+    //         dataInfoDiv.classList.add("data-info");
+
+    //         // Display data information
+    //         dataInfoDiv.innerHTML = `
+    //           <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName}</p>
+    //           <p><strong>Department:</strong> ${leaveApplications.department}</p>
+    //           <p><strong>Start Leave Date:</strong> ${leaveApplications.startLeaveDate}</p>
+    //           <!-- Add more fields as needed -->
+    //         `;
+
+    //         dataListContainer.appendChild(dataInfoDiv);
+    //       });
+    //     }
+    //   });
+    // }
+
+    // // Fetch and display all data on page load
+    // window.onload = () => {
+    //   fetchAllData();
+    // };
+  </script>
+
+
+
+
+  </body>
+</html>

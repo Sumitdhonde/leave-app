@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #121212;
+        color: #ffffff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      h1 {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+      }
+
+      input {
+        width: 200px;
+        padding: 10px;
+        margin-bottom: 16px;
+        border: 1px solid #444;
+        border-radius: 5px;
+        background-color: #333;
+        color: #fff;
+      }
+
+      button {
+        background-color: #8e44ad;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #6c3483;
+      }
+
+      #dataList {
+        margin-top: 20px;
+      }
+
+      .data-info {
+        margin-top: 10px;
+        padding: 10px;
+        background-color: #1f1f1f;
+        border-radius: 5px;
+        box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 80%; /* Adjust the width as needed */
+      }
+
+      .data-info p {
+        margin: 0;
+        padding-right: 10px;
+      }
+
+      .status-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+
+      .status-approved {
+        background-color: green;
+      }
+
+      .status-pending {
+        background-color: yellow;
+      }
+
+      .data-info input {
+        margin-right: 10px;
+      }
+
+      .data-info button {
+        background-color: #8e44ad;
+        color: #fff;
+        padding: 5px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+      }
+
+      .data-info button:hover {
+        background-color: #6c3483;
+      }
+    </style>
+    <!-- Your head content here -->
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+
+    <script>
+      const firebaseConfig = {
+        apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
+        authDomain: "test2-5bbcd.firebaseapp.com",
+        projectId: "test2-5bbcd",
+        storageBucket: "test2-5bbcd.appspot.com",
+        messagingSenderId: "825583645874",
+        appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
+        measurementId: "G-B3HKML6191",
+      };
+
+      firebase.initializeApp(firebaseConfig);
+      const database = firebase.database();
+
+      function fetchData() {
+        const facultyId = document.getElementById("facultyId").value;
+
+        database
+          .ref("leaveApplications")
+          .orderByChild("facultyUniqueId")
+          .equalTo(facultyId)
+          .once("value")
+          .then((snapshot) => {
+            const data = snapshot.val();
+
+            if (data) {
+              const dataListContainer = document.getElementById("dataList");
+              dataListContainer.innerHTML = "";
+
+              Object.keys(data).forEach((dataId) => {
+                const leaveApplications = data[dataId];
+                const dataInfoDiv = document.createElement("div");
+                dataInfoDiv.classList.add("data-info");
+
+                // Convert status to lowercase for case-insensitive check
+                const lowercaseStatus = leaveApplications.status.toLowerCase();
+
+                // Set the status dot color based on the status
+                const statusDotClass =
+                  lowercaseStatus === "approved"
+                    ? "status-approved"
+                    : "status-pending";
+
+                // Display data information
+                dataInfoDiv.innerHTML = `
+              <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName} | 
+              <strong>Faculty ID:</strong> ${leaveApplications.facultyUniqueId} | 
+              <strong>Start Leave Date:</strong> ${leaveApplications.startLeaveDate} | 
+              <div class="status-dot ${statusDotClass}"></div>
+              <button class="downloadButton">Download</button></p>
+            `;
+
+                dataListContainer.appendChild(dataInfoDiv);
+              });
+            } else {
+              console.log("No data found for the given faculty ID.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching data:", error);
+          });
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Your body content here -->
+
+    <h1>Retrieve Data</h1>
+    <label for="facultyId">Enter Faculty ID:</label>
+    <input type="text" id="facultyId" />
+    <button onclick="fetchData()">Retrieve Data</button>
+
+    <div id="dataList"></div>
+  </body>
+</html>
