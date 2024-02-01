@@ -7,7 +7,7 @@
     <style>
       body {
         font-family: "Arial", sans-serif;
-        background-color: #121212;
+        background: linear-gradient(to right, #8e44ad, #3498db);
         color: #ffffff;
         margin: 0;
         display: flex;
@@ -19,12 +19,14 @@
       .data-info {
         margin-top: 10px;
         padding: 10px;
-        background-color: #1f1f1f;
+        background-color: #000000;
         border-radius: 5px;
         box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
         display: flex;
         justify-content: space-between;
         align-items: center;
+        color: white;
+        border-radius: 20px;
         width: 100%; /* Adjust width as needed */
       }
 
@@ -115,6 +117,8 @@
           } onchange="updateStatus('${dataId}', this.checked)"> | 
           <button class="deleteButton" onclick="deleteData('${dataId}')">Delete</button> | 
           <button class="downloadButton">Download</button></p>
+         
+
         `;
 
               dataListContainer.appendChild(dataInfoDiv);
