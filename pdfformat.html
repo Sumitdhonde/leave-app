@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+      crossorigin="anonymous"
+    />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.js"></script>
+
+    <!-- <style>
+      body {
+        margin: 0;
+        font-family: Roboto, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        font-size: 0.8125rem;
+        font-weight: 400;
+        line-height: 1.5385;
+        color: #333;
+        text-align: left;
+        background-color: #eee;
+      }
+
+      .mt-50 {
+        margin-top: 50px;
+      }
+
+      .mb-50 {
+        margin-bottom: 50px;
+      }
+
+      .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0, 0, 0, 0.125);
+        border-radius: 0.1875rem;
+      }
+
+      .card-img-actions {
+        position: relative;
+      }
+
+      .card-body {
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1.25rem;
+        text-align: center;
+      }
+
+      .card-title {
+        margin-top: 10px;
+        font-size: 17px;
+      }
+
+      .invoice-color {
+        color: red !important;
+      }
+
+      .card-header {
+        padding: 0.9375rem 1.25rem;
+        margin-bottom: 0;
+        background-color: rgba(0, 0, 0, 0.02);
+        border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+      }
+
+      a {
+        text-decoration: none !important;
+      }
+
+      .btn-light {
+        color: #333;
+        background-color: #fafafa;
+        border-color: #ddd;
+      }
+
+      .header-elements-inline {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+      }
+
+      @media (min-width: 768px) {
+        .wmin-md-400 {
+          min-width: 400px !important;
+        }
+      }
+
+      .btn-primary {
+        color: #fff;
+        background-color: #2196f3;
+      }
+
+      .btn-labeled > b {
+        position: absolute;
+        top: -1px;
+        background-color: blue;
+        display: block;
+        line-height: 1;
+        padding: 0.62503rem;
+      }
+    </style> -->
+    <style type="text/css">
+      /* @import url(https://themes.googleusercontent.com/fonts/css?kit=fpjTOVmNbO4Lz34iLyptLUXza5VhXqVC6o75Eld_V98); */
+      ol {
+        margin: 0;
+        padding: 0;
+      }
+      table td,
+      table th {
+        padding: 0;
+      }
+      .c6 {
+        border-right-style: solid;
+        border-bottom-color: #000000;
+        border-top-width: 1pt;
+        border-right-width: 1pt;
+        border-left-color: #000000;
+        vertical-align: top;
+        border-right-color: #000000;
+        border-left-width: 1pt;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-bottom-width: 1pt;
+        width: 225.1pt;
+        border-top-color: #000000;
+        border-bottom-style: solid;
+      }
+      .c8 {
+        border-right-style: solid;
+        border-bottom-color: #000000;
+        border-top-width: 1pt;
+        border-right-width: 1pt;
+        border-left-color: #000000;
+        vertical-align: top;
+        border-right-color: #000000;
+        border-left-width: 1pt;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-bottom-width: 1pt;
+        width: 413.4pt;
+        border-top-color: #000000;
+        border-bottom-style: solid;
+      }
+      .c5 {
+        border-right-style: solid;
+        border-bottom-color: #000000;
+        border-top-width: 1pt;
+        border-right-width: 1pt;
+        border-left-color: #000000;
+        vertical-align: top;
+        border-right-color: #000000;
+        border-left-width: 1pt;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-bottom-width: 1pt;
+        width: 144pt;
+        border-top-color: #000000;
+        border-bottom-style: solid;
+      }
+      .c7 {
+        border-right-style: solid;
+        border-bottom-color: #000000;
+        border-top-width: 1pt;
+        border-right-width: 1pt;
+        border-left-color: #000000;
+        vertical-align: top;
+        border-right-color: #000000;
+        border-left-width: 1pt;
+        border-top-style: solid;
+        border-left-style: solid;
+        border-bottom-width: 1pt;
+        width: 188.3pt;
+        border-top-color: #000000;
+        border-bottom-style: solid;
+      }
+      .c17 {
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 10pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c2 {
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 16pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c21 {
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 24pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c22 {
+        color: #000000;
+        font-weight: 700;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 14pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c10 {
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 11pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c9 {
+        color: #000000;
+        font-weight: 700;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 11pt;
+        font-family: "Calibri";
+        font-style: normal;
+      }
+      .c25 {
+        color: #000000;
+        font-weight: 400;
+        text-decoration: none;
+        vertical-align: baseline;
+        font-size: 12pt;
+        font-family: "Times New Roman";
+        font-style: normal;
+      }
+      .c11 {
+        margin-left: 0.3pt;
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 1.1041666666666667;
+        text-align: center;
+        margin-right: 36.7pt;
+      }
+      .c16 {
+        margin-left: 0.3pt;
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 1.05;
+        text-align: center;
+        margin-right: 36.6pt;
+      }
+      .c0 {
+        margin-left: 36.7pt;
+        padding-top: 5.8pt;
+        padding-bottom: 0pt;
+        line-height: 1;
+        text-align: center;
+        margin-right: 36.4pt;
+      }
+      .c18 {
+        margin-left: 5.4pt;
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 1.0374999999999999;
+        text-align: left;
+      }
+      .c14 {
+        margin-left: 5.4pt;
+        padding-top: 1.4pt;
+        padding-bottom: 0pt;
+        line-height: 1;
+        text-align: left;
+      }
+      .c15 {
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 0.06;
+        text-align: left;
+      }
+      .c1 {
+        margin-left: 3.2pt;
+        border-spacing: 0;
+        border-collapse: collapse;
+        margin-right: auto;
+      }
+      .c20 {
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 1.15;
+        text-align: left;
+      }
+      .c3 {
+        padding-top: 0pt;
+        padding-bottom: 0pt;
+        line-height: 1;
+        text-align: left;
+      }
+      .c23 {
+        background-color: #ffffff;
+        max-width: 585pt;
+        padding: 124pt 13pt 14pt 14pt;
+      }
+      .c19 {
+        height: 16.6pt;
+      }
+      .c13 {
+        height: 28.8pt;
+      }
+      .c4 {
+        height: 26.9pt;
+      }
+      .c24 {
+        height: 13.4pt;
+      }
+      .c12 {
+        height: 11pt;
+      }
+      .title {
+        padding-top: 24pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 36pt;
+        padding-bottom: 6pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      .subtitle {
+        padding-top: 18pt;
+        color: #666666;
+        font-size: 24pt;
+        padding-bottom: 4pt;
+        font-family: "Georgia";
+        line-height: 1;
+        page-break-after: avoid;
+        font-style: italic;
+        text-align: left;
+      }
+      li {
+        color: #000000;
+        font-size: 11pt;
+        font-family: "Calibri";
+      }
+      p {
+        margin: 0;
+        color: #000000;
+        font-size: 11pt;
+        font-family: "Calibri";
+      }
+      h1 {
+        padding-top: 24pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 24pt;
+        padding-bottom: 6pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      h2 {
+        padding-top: 18pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 18pt;
+        padding-bottom: 4pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      h3 {
+        padding-top: 14pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 14pt;
+        padding-bottom: 4pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      h4 {
+        padding-top: 12pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 12pt;
+        padding-bottom: 2pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      h5 {
+        padding-top: 11pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 11pt;
+        padding-bottom: 2pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+      h6 {
+        padding-top: 10pt;
+        color: #000000;
+        font-weight: 700;
+        font-size: 10pt;
+        padding-bottom: 2pt;
+        font-family: "Calibri";
+        line-height: 1;
+        page-break-after: avoid;
+        text-align: left;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container d-flex justify-content-center mt-50 mb-50">
+      <div class="row">
+        <div class="col-md-12 text-right mb-3">
+          <button class="btn btn-primary" id="download">download pdf</button>
+        </div>
+        <div class="col-md-12">
+          <div class="card" id="invoice">
+            <div>
+              <p class="c15 c12"><span class="c17"></span></p>
+              <a id="t.7c6cfa87c82d7f81b0ceb8d442e59b599283ef49"></a
+              ><a id="t.0"></a>
+              <table class="c1">
+                <tr class="c4">
+                  <td class="c5" colspan="1" rowspan="4">
+                    <p class="c3 c12"><span class="c25"></span></p>
+                  </td>
+                  <td class="c8" colspan="2" rowspan="1">
+                    <p class="c11">
+                      <span class="c9"
+                        >Dr. D. Y. Patil Pratishthan&#39;s College of
+                        Engineering</span
+                      >
+                    </p>
+                    <p class="c16">
+                      <span class="c9">Salokhenagar, Kolhapur</span>
+                    </p>
+                  </td>
+                </tr>
+                <tr class="c19">
+                  <td class="c6" colspan="1" rowspan="1">
+                    <p class="c14"><span class="c10">Doc. No: DYP</span></p>
+                  </td>
+                  <td class="c7" colspan="1" rowspan="1">
+                    <p class="c14"><span class="c10">Revision No. 00</span></p>
+                  </td>
+                </tr>
+                <tr class="c24">
+                  <td class="c6" colspan="1" rowspan="1">
+                    <p class="c18"><span class="c10">Page 1 of 1</span></p>
+                  </td>
+                  <td class="c7" colspan="1" rowspan="1">
+                    <p class="c18">
+                      <span class="c10">Revision Date:01/07/2019</span>
+                    </p>
+                  </td>
+                </tr>
+                <tr class="c13">
+                  <td class="c8" colspan="2" rowspan="1">
+                    <p class="c0">
+                      <span class="c22"
+                        >Annual Sports (INFINITO) AY 2023-24</span
+                      >
+                    </p>
+                  </td>
+                </tr>
+              </table>
+              <p class="c15">
+                <span
+                  style="
+                    overflow: hidden;
+                    display: inline-block;
+                    margin: 0px 0px;
+                    border: 0px solid #000000;
+                    transform: rotate(0rad) translateZ(0px);
+                    -webkit-transform: rotate(0rad) translateZ(0px);
+                    width: 174.57px;
+                    height: 102.2px;
+                  "
+                  ><img
+                    alt=""
+                    src="image1.png"
+                    style="
+                      width: 174.57px;
+                      height: 102.2px;
+                      margin-left: 0px;
+                      margin-top: 0px;
+                      transform: rotate(0rad) translateZ(0px);
+                      -webkit-transform: rotate(0rad) translateZ(0px);
+                    "
+                    title=""
+                /></span>
+              </p>
+            </div>
+            <p class="c3 c12"><span class="c10"></span></p>
+            <p class="c3 c12"><span class="c10"></span></p>
+            <p class="c3 c12"><span class="c2"></span></p>
+            <p class="c3">
+              <span class="c2" id="name">Faculty Name : xyz</span>
+            </p>
+            <p class="c3"><span class="c2" id="id">Faculty id: 000</span></p>
+            <p class="c3 c12"><span class="c10"></span></p>
+            <p class="c3"><span class="c2" id="dep">Department: abc</span></p>
+            <p class="c3"><span class="c2" id="sub">Subject: DB</span></p>
+            <p class="c3">
+              <span class="c2" id="start">Leave start date : 111:</span>
+            </p>
+            <p class="c3">
+              <span class="c2" id="end">Leave end date: 111</span>
+            </p>
+            <p class="c3">
+              <span class="c2" id="type">Leave type: medical</span>
+            </p>
+            <p class="c3"><span class="c2" id="year">year: ty</span></p>
+
+            <p class="c3">
+              <span class="c2" id="reason">Leave reason : abc</span>
+            </p>
+            <p class="c3">
+              <span class="c10"
+                >&nbsp;<br /><br /><br /><br /><br /><br
+              /></span>
+            </p>
+            <p class="c3">
+              <span class="c21" id="status">Approved by hod : not</span>
+            </p>
+
+            <div class="col-md-12 text-right mb-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    window.onload = function () {
+      document.getElementById("download").addEventListener("click", () => {
+        const invoice = this.document.getElementById("invoice");
+        console.log(invoice);
+        console.log(window);
+        var opt = {
+          margin: 1,
+          filename: "myfile.pdf",
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "in", format: "letter", orientation: "portrait" },
+        };
+        html2pdf().from(invoice).set(opt).save();
+      });
+    };
+
+    const name = localStorage.getItem("name");
+    const id = localStorage.getItem("id");
+    const start = localStorage.getItem("start");
+    const end = localStorage.getItem("end");
+    const dep = localStorage.getItem("dep");
+    const type = localStorage.getItem("type");
+    const reason = localStorage.getItem("reason");
+    const year = localStorage.getItem("year");
+    const status = localStorage.getItem("status");
+
+    // Log the retrieved data (you can use this data as needed)
+    document.getElementById("name").innerText = "Name: " + name;
+    document.getElementById("id").innerText = "ID: " + id;
+
+    document.getElementById("start").innerText = "Start: " + start;
+    document.getElementById("end").innerText = "end: " + end;
+    document.getElementById("dep").innerText = "department: " + dep;
+    document.getElementById("type").innerText = "type: " + type;
+    document.getElementById("reason").innerText = "reason: " + reason;
+    document.getElementById("year").innerText = "year: " + year;
+
+    console.log(status);
+
+    if (status === 1) {
+      document.getElementById("status").innerText = status;
+    } else {
+      document.getElementById("status").innerText = "Not " + status;
+    }
+  </script>
+</html>
