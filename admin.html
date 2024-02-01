@@ -107,19 +107,45 @@
 
               // Display data information
               dataInfoDiv.innerHTML = `
-          <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName} | 
-          <strong>Faculty ID:</strong> ${leaveApplications.facultyUniqueId} | 
-          <strong>Start Leave Date:</strong> ${
-            leaveApplications.startLeaveDate
-          } | 
-          <input type="checkbox" class="dataCheckbox" ${
-            leaveApplications.status === "Approved" ? "checked" : ""
-          } onchange="updateStatus('${dataId}', this.checked)"> | 
-          <button class="deleteButton" onclick="deleteData('${dataId}')">Delete</button> | 
-          <button class="downloadButton">Download</button></p>
-         
+                <p><strong>Faculty Name:</strong> ${
+                  leaveApplications.facultyName
+                } |
+                <strong>Faculty ID:</strong> ${
+                  leaveApplications.facultyUniqueId
+                } |
+                <strong>Start Leave Date:</strong> ${
+                  leaveApplications.startLeaveDate
+                } |
+                <input type="checkbox" class="dataCheckbox" ${
+                  leaveApplications.status === "Approved" ? "checked" : ""
+                } onchange="updateStatus('${dataId}', this.checked)"> |
+                <button class="deleteButton" onclick="deleteData('${dataId}')">Delete</button> |
 
-        `;
+                <button class="downloadButton" onclick="showHTMLContent('${
+                  leaveApplications.facultyName
+                }', '${leaveApplications.facultyUniqueId}','${
+                leaveApplications.startLeaveDate
+              }', '${leaveApplications.endLeaveDate}','${
+                leaveApplications.department
+              }', '${leaveApplications.leaveType}','${
+                leaveApplications.reason
+              }','${leaveApplications.year}','${
+                leaveApplications.status
+              }')">Download</button></p>
+
+              `;
+
+              //               Department: abc
+
+              // Subject: DB
+
+              // Leave start date : 111:
+
+              // Leave end date: 111
+
+              // Leave type: medical
+
+              // Leave reason : abc
 
               dataListContainer.appendChild(dataInfoDiv);
             });
@@ -145,6 +171,39 @@
         database.ref("leaveApplications").child(key).remove();
         console.log(`Data with key ${key} deleted from Firebase!`);
       }
+
+      //pdf code
+      function showHTMLContent(
+        name,
+        id,
+        start,
+        end,
+        dep,
+        type,
+        reason,
+        year,
+        staus
+      ) {
+        localStorage.setItem("name", name);
+
+        localStorage.setItem("id", id);
+        localStorage.setItem("start", start);
+        localStorage.setItem("end", end);
+        localStorage.setItem("dep", dep);
+
+        localStorage.setItem("type", type);
+
+        localStorage.setItem("reason", reason);
+
+        localStorage.setItem("year", year);
+
+        let s = localStorage.setItem("status", status);
+
+        let get = localStorage.getItem("name");
+
+        window.location.href = "pdfformat.html";
+      }
+      // Open a new window and write the HTML content
     </script>
   </body>
 </html>
