@@ -113,8 +113,9 @@
 
     <div class="formstart">
       <form id="leaveForm">
-        <label for="facultyName">Faculty Name:</label>
-        <input type="text" id="facultyName" name="facultyName" required />
+        <label for="facultyName" action="https://api.web3forms.com/submit" method="POST">Faculty Name:</label>
+       <input type="hidden" name="access_key" value="441f931b-4fd7-4ee7-b7ef-9efbd024a60e">
+  <input type="text" id="facultyName" name="facultyName" required />
 
         <label for="facultyUniqueId">Faculty Unique ID:</label>
         <input
