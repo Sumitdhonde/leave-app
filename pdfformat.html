@@ -598,13 +598,15 @@
     document.getElementById("type").innerText = "type: " + type;
     document.getElementById("reason").innerText = "reason: " + reason;
     document.getElementById("year").innerText = "year: " + year;
+    document.getElementById("status").innerText = "status: " + status;
+    localStorage.removeItem(year);
 
     console.log(status);
 
-    if (status === 1) {
+    if (status === "Approved") {
       document.getElementById("status").innerText = status;
     } else {
-      document.getElementById("status").innerText = "Not " + status;
+      document.getElementById("status").innerText = status;
     }
   </script>
 </html>
