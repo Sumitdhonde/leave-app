@@ -132,8 +132,12 @@
             if (data) {
               const dataListContainer = document.getElementById("dataList");
               dataListContainer.innerHTML = "";
+              // Get the keys of the data object and store them in an array
+              const dataKeys = Object.keys(data);
 
-              Object.keys(data).forEach((dataId) => {
+              // Loop through the keys in reverse order
+              for (let i = dataKeys.length - 1; i >= 0; i--) {
+                const dataId = dataKeys[i];
                 const leaveApplications = data[dataId];
                 const dataInfoDiv = document.createElement("div");
                 dataInfoDiv.classList.add("data-info");
@@ -149,15 +153,15 @@
 
                 // Display data information
                 dataInfoDiv.innerHTML = `
-              <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName} | 
-              <strong>Faculty ID:</strong> ${leaveApplications.facultyUniqueId} | 
-              <strong>Start Leave Date:</strong> ${leaveApplications.startLeaveDate} | 
-              <div class="status-dot ${statusDotClass}"></div>
-              <button class="downloadButton" onclick="showHTMLContent('${leaveApplications.facultyName}', '${leaveApplications.facultyUniqueId}','${leaveApplications.startLeaveDate}', '${leaveApplications.endLeaveDate}','${leaveApplications.department}', '${leaveApplications.leaveType}','${leaveApplications.reason}','${leaveApplications.year}','${leaveApplications.status}')">Download</button></p>
-            `;
+        <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName} | 
+        <strong>Faculty ID:</strong> ${leaveApplications.facultyUniqueId} | 
+        <strong>Start Leave Date:</strong> ${leaveApplications.startLeaveDate} | 
+        <div class="status-dot ${statusDotClass}"></div>
+        <button class="downloadButton" onclick="showHTMLContent('${leaveApplications.facultyName}', '${leaveApplications.facultyUniqueId}','${leaveApplications.startLeaveDate}', '${leaveApplications.endLeaveDate}', '${leaveApplications.leaveType}','${leaveApplications.reason}','${leaveApplications.status}')">Download</button></p>
+    `;
 
                 dataListContainer.appendChild(dataInfoDiv);
-              });
+              }
             } else {
               console.log("No data found for the given faculty ID.");
             }
@@ -174,10 +178,8 @@
         id,
         start,
         end,
-        dep,
         type,
         reason,
-        year,
 
         status
       ) {
@@ -186,13 +188,13 @@
         localStorage.setItem("id", id);
         localStorage.setItem("start", start);
         localStorage.setItem("end", end);
-        localStorage.setItem("dep", dep);
+        // localStorage.setItem("dep", dep);
 
         localStorage.setItem("type", type);
 
         localStorage.setItem("reason", reason);
 
-        localStorage.setItem("year", year);
+        // localStorage.setItem("year", year);
 
         let s = localStorage.setItem("status", status);
 
