@@ -186,6 +186,7 @@
 
       startDate.addEventListener("change", function() {
             endDate.setAttribute("min", this.value);
+            // endDate.value = "";
         });
 
         endDate.addEventListener("change", function() {
@@ -252,7 +253,7 @@
   // var startDate = document.getElementById("startLeaveDate");
 //  var curr = startDate.setAttribute("min", today);
 
-  endDate.setAttribute("min", curr);
+  // endDate.setAttribute("min", curr);
 
         const facultyId = document.getElementById("facultyUniqueId").value;
         const dataRef = database1.ref("leaveBalance");
@@ -272,7 +273,7 @@
 
                     if (remainingLeaves >= 1) {
                         updateStatus(dataId, remainingLeaves, leaveType);
-                        console.log("Updated status successfully:", remainingLeaves);
+                        // console.log("Updated status successfully:", remainingLeaves);
                         addDataInDb();
 
                     } else {
@@ -328,12 +329,16 @@
             status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending",
         };
 
+        let calStartPush = new Date(formData.startLeaveDate)
+        let calEndPush = new Date(formData.endLeaveDate)
+        let dateDiffPush = ((calEndPush - calStartPush) / (1000 * 60 * 60 * 24)) + 1
+
         // Fetch the existing leave balance from the first database
       
 
         database2.ref("leaveApplications").push(formData)
                 .then(() => {
-                    console.log("Form data submitted to Firebase 2!");
+                    console.log("Form data submitted to Firebase !");
                 
                 })
                 .catch(error => {
@@ -342,14 +347,14 @@
 
             // Clear the form fields
             adminUrl = "https://sumitdhonde.github.io/leave-app/admin.html"
-            sendEmail(formData.facultyName , adminUrl);
+            sendEmail(formData.facultyName , adminUrl ,FormData.startLeaveDate,formData.endLeaveDate ,dateDiffPush, formData.leaveType ,formData.reason);
 
             clearFormFields();
             alert("Leave application submitted successfully !  \n wait for approval...")
     }
 
 
-    function sendEmail(name,adminUrl) {
+    function sendEmail(name,adminUrl , start, end ,dateDiffPush , leavetypeEmail , reason) {
         // Get the email address from the input field
         // const email = document.getElementById("email").value;
 
@@ -361,8 +366,8 @@
           To: "mytvdor@gmail.com",
           From: "leaveapptest@outlook.com",
           Subject: "leave application mail",
-          Body: `${name} wants leave. \n approve leave here${adminUrl}`,
-        }).then((message) => alert(message));
+          Body: `${name} wants leave. \n approve leave here${adminUrl} \nfrom ${start} to ${end}. \n total days: ${dateDiffPush} \n type of leave : ${leavetypeEmail} \n Leave Reason ${reason}`,
+        }).then();
       }
 
 
@@ -374,7 +379,7 @@
           // document.getElementById("department").value = "";
           // document.getElementById("year").value = "";
           // document.getElementById("subjectName").value = "";
-          // document.getElementById("startLeaveDate").value = "";
+          document.getElementById("startLeaveDate").value = "";
           document.getElementById("endLeaveDate").value = "";
           document.getElementById("leaveType").value = "";
           document.getElementById("reason").value = "";
