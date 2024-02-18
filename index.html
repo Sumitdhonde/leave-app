@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leave Application Form</title>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
     <style>
       body {
       font-family: 'Arial', sans-serif;
@@ -178,11 +179,19 @@
       var endDate = document.getElementById("endLeaveDate");
   
       var startDate = document.getElementById("startLeaveDate");
-      startDate.setAttribute("min", today);
+   startDate.setAttribute("min", today);
 
       endDate.setAttribute("min", today);
+
+
+      startDate.addEventListener("change", function() {
+            endDate.setAttribute("min", this.value);
+        });
+
+        endDate.addEventListener("change", function() {
+            startDate.setAttribute("max", this.value);
+        });
   
-      var today = new Date().toISOString().split('T')[0];
 
 // console.log(typeof leaveType)
   
@@ -236,6 +245,14 @@
         var startDateF = document.getElementById("startLeaveDate").value;
         var endDateF = document.getElementById("endLeaveDate").value;
         let actualdiff = calD(startDateF, endDateF);
+
+        
+  //     var endDate = document.getElementById("endLeaveDate");
+  
+  // var startDate = document.getElementById("startLeaveDate");
+//  var curr = startDate.setAttribute("min", today);
+
+  endDate.setAttribute("min", curr);
 
         const facultyId = document.getElementById("facultyUniqueId").value;
         const dataRef = database1.ref("leaveBalance");
@@ -324,9 +341,29 @@
                 });
 
             // Clear the form fields
+            adminUrl = "https://sumitdhonde.github.io/leave-app/admin.html"
+            sendEmail(formData.facultyName , adminUrl);
+
             clearFormFields();
             alert("Leave application submitted successfully !  \n wait for approval...")
     }
+
+
+    function sendEmail(name,adminUrl) {
+        // Get the email address from the input field
+        // const email = document.getElementById("email").value;
+
+        // Send email using SMTP.js
+        Email.send({
+          Host: "smtp.elasticemail.com",
+          Username: "leaveapptest@outlook.com",
+          Password: "92D411389FDBE600F34862D3790177D41929",
+          To: "mytvdor@gmail.com",
+          From: "leaveapptest@outlook.com",
+          Subject: "leave application mail",
+          Body: `${name} wants leave. \n approve leave here${adminUrl}`,
+        }).then((message) => alert(message));
+      }
 
 
 
