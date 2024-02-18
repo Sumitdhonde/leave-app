@@ -531,7 +531,7 @@
             <p class="c3"><span class="c2" id="id">Faculty id: 000</span></p>
             <p class="c3 c12"><span class="c10"></span></p>
             <p class="c3"><span class="c2" id="dep">Department: abc</span></p>
-            <p class="c3"><span class="c2" id="sub">Subject: DB</span></p>
+            <!-- <p class="c3"><span class="c2" id="sub">Subject: DB</span></p> -->
             <p class="c3">
               <span class="c2" id="start">Leave start date : 111:</span>
             </p>
@@ -541,7 +541,6 @@
             <p class="c3">
               <span class="c2" id="type">Leave type: medical</span>
             </p>
-            <p class="c3"><span class="c2" id="year">year: ty</span></p>
 
             <p class="c3">
               <span class="c2" id="reason">Leave reason : abc</span>
@@ -582,10 +581,10 @@
     const id = localStorage.getItem("id");
     const start = localStorage.getItem("start");
     const end = localStorage.getItem("end");
-    const dep = localStorage.getItem("dep");
+    // const dep = localStorage.getItem("dep");
     const type = localStorage.getItem("type");
     const reason = localStorage.getItem("reason");
-    const year = localStorage.getItem("year");
+    // const year = localStorage.getItem("year");
     const status = localStorage.getItem("status");
 
     // Log the retrieved data (you can use this data as needed)
@@ -594,12 +593,12 @@
 
     document.getElementById("start").innerText = "Start: " + start;
     document.getElementById("end").innerText = "end: " + end;
-    document.getElementById("dep").innerText = "department: " + dep;
+    // document.getElementById("dep").innerText = "department: " + dep;
     document.getElementById("type").innerText = "type: " + type;
     document.getElementById("reason").innerText = "reason: " + reason;
-    document.getElementById("year").innerText = "year: " + year;
+    // document.getElementById("year").innerText = "year: " + year;
     document.getElementById("status").innerText = "status: " + status;
-    localStorage.removeItem(year);
+    // localStorage.removeItem(year);
 
     console.log(status);
 
