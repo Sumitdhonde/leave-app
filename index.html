@@ -5,30 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Leave Application Form</title>
     <style>
-        /* body {
-          font-family: "Arial", sans-serif;
-          background: linear-gradient(to right, #8e44ad, #3498db);
-          color: #ffffff;
-          margin: 0;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          height: auto;
-        }
-  
-        .formstart {
-          font-family: "Arial", sans-serif;
-          background: linear-gradient(to right, #8e44ad, #3498db);
-          color: #ffffff;
-   
-          display: flex;
-        Increase the max-width for better visibility on larger screens
-          justify-content: center;
-          align-items: center;
-     
-        } */
-        body {
+      body {
       font-family: 'Arial', sans-serif;
       background: linear-gradient(to right, #8e44ad, #3498db);
       color: #ffffff;
@@ -112,11 +89,9 @@
    <h1 class="last" style="color: #fff;">FORM FOR LEAVE APPLICATION</h1> 
 
     <div class="formstart">
-      <form id="leaveForm"  action="https://api.web3forms.com/submit" method="POST">
-               <input type="hidden" name="access_key" value="90fce3ed-c4ac-4155-b389-c51363549a2a">
-
+      <form id="leaveForm">
         <label for="facultyName">Faculty Name:</label>
-  <input type="text" id="facultyName" name="facultyName" required />
+        <input type="text" id="facultyName" name="facultyName" required />
 
         <label for="facultyUniqueId">Faculty Unique ID:</label>
         <input
@@ -126,30 +101,30 @@
           required
         />
 
-        <label for="department">Department:</label>
+        <!-- <label for="department">Department:</label>
         <select id="department" name="department">
           <option value="CSE">CSE</option>
           <option value="ELECTRICAL">Electrical</option>
           <option value="CIVIL">Civil</option>
           <option value="FY">FY</option>
-        </select>
+        </select> -->
 
-        <label for="year">Year:</label>
+        <!-- <label for="year">Year:</label>
         <select id="year" name="year">
           <option value="fy">FY</option>
           <option value="sy">SY</option>
           <option value="ty">TY</option>
           <option value="btech">B.Tech</option>
-        </select>
-
+        </select> -->
+<!-- 
         <label for="subjectName">Subject Name:</label>
-        <input type="text" id="subjectName" name="subjectName" required />
+        <input type="text" id="subjectName" name="subjectName" required /> -->
 
         <label for="startLeaveDate">Start Leave Date:</label>
-        <input type="date" id="startLeaveDate" name="startLeaveDate" required />
+        <input type="date" id="startLeaveDate" class="min" name="startLeaveDate" required />
 
-        <label for="endLeaveDate">End Leave Date:</label>
-        <input type="date" id="endLeaveDate" name="endLeaveDate" required />
+        <label for="endLeaveDate" onchange="fetchData()">End Leave Date:</label>
+        <input type="date" id="endLeaveDate" class="min"  name="endLeaveDate" required />
 
         <label for="leaveType">Type of Leave:</label>
         <select id="leaveType" name="leaveType">
@@ -157,11 +132,12 @@
           <option value="personal">Personal</option>
         </select>
 
-        <label for="reason">Reason:</label>
+
+        <label for="reason">Reason and other info:</label>
         <input id="reason" name="reason" rows="4" required></input>
 
-        <label for="otherInfo">Other Info:</label>
-        <input id="otherInfo" name="otherInfo" rows="4"></input>
+        <!-- <label for="otherInfo">Other Info:</label>
+        <input id="otherInfo" name="otherInfo" rows="4"></input> -->
 
        
         <!-- <label class="switch"> -->
@@ -196,170 +172,184 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
   
-
     <script>
-    //   document
-    //     .getElementById("leaveForm")
-    //     .addEventListener("submit", function (event) {
-    //       event.preventDefault();
+      var today = new Date().toISOString().split('T')[0];
+  
+      var endDate = document.getElementById("endLeaveDate");
+  
+      var startDate = document.getElementById("startLeaveDate");
+      startDate.setAttribute("min", today);
 
+      endDate.setAttribute("min", today);
+  
+      var today = new Date().toISOString().split('T')[0];
 
+// console.log(typeof leaveType)
+  
+      const firebaseConfig1 = {
+          apiKey: "AIzaSyCdmIjedOZbqW5i2LOV6AjlX2zucM5xlAU",
+          authDomain: "leaveapp-staffdata.firebaseapp.com",
+          projectId: "leaveapp-staffdata",
+          storageBucket: "leaveapp-staffdata.appspot.com",
+          messagingSenderId: "599284701074",
+          appId: "1:599284701074:web:91d97a2ec132d501d4534b",
+          measurementId: "G-DZXJNRVLT0"
+      };
+  
+      const firebaseConfig2 = {
+          apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
+          authDomain: "test2-5bbcd.firebaseapp.com",
+          projectId: "test2-5bbcd",
+          storageBucket: "test2-5bbcd.appspot.com",
+          messagingSenderId: "825583645874",
+          appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
+          measurementId: "G-B3HKML6191"
+      };
+  
+      // Initialize Firebase app instances for each database
+      const app1 = firebase.initializeApp(firebaseConfig1, "app1");
+      const database1 = app1.database();
+  
+      const app2 = firebase.initializeApp(firebaseConfig2, "app2");
+      const database2 = app2.database();
+  
+      function navigateToLeaveApproval() {
+          window.location.href = 'admin.html';
+      }
+  
+      function history() {
+          window.location.href = 'history.html';
+      }
 
-    //    let formData = {
-    //         facultyName: document.getElementById("facultyName").value,
-    //         facultyUniqueId: document.getElementById("facultyUniqueId").value,
-    //         department: document.getElementById("department").value,
-    //         year: document.getElementById("year").value,
-    //         subjectName: document.getElementById("subjectName").value,
-    //         startLeaveDate: document.getElementById("startLeaveDate").value,
-    //         endLeaveDate: document.getElementById("endLeaveDate").value,
-    //         leaveType: document.getElementById("leaveType").value,
-    //         reason: document.getElementById("reason").value,
-    //         otherInfo: document.getElementById("otherInfo").value,
-    //         status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending"
+      let remainingLeaves = 100;
 
-    //       };
+      document.getElementById("leaveForm").addEventListener("submit", async function (event) {
+    event.preventDefault();
+    await submitLeaveForm();
+});
 
+      const submitLeaveForm = async () => {
+ 
+        event.preventDefault();
+        let leaveType = document.getElementById("leaveType").value;
 
-       
-    //       console.log(formData);
+        var startDateF = document.getElementById("startLeaveDate").value;
+        var endDateF = document.getElementById("endLeaveDate").value;
+        let actualdiff = calD(startDateF, endDateF);
 
-    //       document.getElementById("facultyName").value = "";
-    // document.getElementById("facultyUniqueId").value = "";
-    // document.getElementById("department").value = "";
-    // document.getElementById("year").value = "";
-    // document.getElementById("subjectName").value = "";
-    // document.getElementById("startLeaveDate").value = "";
-    // document.getElementById("endLeaveDate").value = "";
-    // document.getElementById("leaveType").value = "";
-    // document.getElementById("reason").value = "";
-    // document.getElementById("otherInfo").value = "";
-    // document.getElementById("approvalSwitch").checked = false;
-    //     });
-//     const firebaseConfig = {
-//       // Your Firebase configuration here
+        const facultyId = document.getElementById("facultyUniqueId").value;
+        const dataRef = database1.ref("leaveBalance");
+
+        try {
+            const snapshot = await dataRef.orderByChild("facultyUniqueId").equalTo(parseInt(facultyId)).once("value");
+            const data = snapshot.val();
+
+            if (data) {
+                Object.keys(data).forEach((dataId) => {
+                    const facultyData = data[dataId];
+                    if (leaveType == "medical") {
+                        remainingLeaves = facultyData.medical - actualdiff;
+                    } else if (leaveType == "personal") {
+                        remainingLeaves = facultyData.special - actualdiff;
+                    }
+
+                    if (remainingLeaves >= 1) {
+                        updateStatus(dataId, remainingLeaves, leaveType);
+                        console.log("Updated status successfully:", remainingLeaves);
+                        addDataInDb();
+
+                    } else {
+                        alert("NOT SUFFICIENT LEAVES");
+                    }
+                });
+            } else {
+                console.log("No data found for the given facultyUniqueId:", facultyId);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
    
-//   apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
-//   authDomain: "test2-5bbcd.firebaseapp.com",
-//   projectId: "test2-5bbcd",
-//   storageBucket: "test2-5bbcd.appspot.com",
-//   messagingSenderId: "825583645874",
-//   appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
-//   measurementId: "G-B3HKML6191"
-// };
 
+    async function updateStatus(key, newStatusOfLeaves, leaveType) {
+        try {
+            if (leaveType == "medical") {
+                await database1.ref("leaveBalance").child(key).update({ medical: newStatusOfLeaves });
+                console.log("Updated status successfully:", newStatusOfLeaves);
+            } else if (leaveType == "personal") {
+                await database1.ref("leaveBalance").child(key).update({ special: newStatusOfLeaves });
+                console.log("Updated status successfully:", newStatusOfLeaves);
+            }
+        } catch (error) {
+            console.error("Error updating status:", error);
+        }
+    }
 
-
-
-
-const firebaseConfig = {
-      // Your Firebase configuration here
-   
-  apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
-  authDomain: "test2-5bbcd.firebaseapp.com",
-  projectId: "test2-5bbcd",
-  storageBucket: "test2-5bbcd.appspot.com",
-  messagingSenderId: "825583645874",
-  appId: "1:825583645874:web:e4b30f5090b5cefeb885ab",
-  measurementId: "G-B3HKML6191"
+    function calD(startDateFf, endDateFf) { //dateDiff
+        let calStart = new Date(startDateFf)
+        let calEnd = new Date(endDateFf)
+        let dateDiff = ((calEnd - calStart) / (1000 * 60 * 60 * 24)) + 1
+        console.log(dateDiff)
+        return dateDiff;
+    }
 };
 
-    const app = firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
 
-    function navigateToLeaveApproval() {
-      window.location.href = 'admin.html';
+      const addDataInDb = () => {
+
+
+        let formData = {
+            facultyName: document.getElementById("facultyName").value,
+            facultyUniqueId: document.getElementById("facultyUniqueId").value,
+            // department: document.getElementById("department").value,
+            // year: document.getElementById("year").value,
+            // subjectName: document.getElementById("subjectName").value,
+            startLeaveDate: document.getElementById("startLeaveDate").value,
+            endLeaveDate: document.getElementById("endLeaveDate").value,
+            leaveType: document.getElementById("leaveType").value,
+            reason: document.getElementById("reason").value,
+            // otherInfo: document.getElementById("otherInfo").value,
+            status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending",
+        };
+
+        // Fetch the existing leave balance from the first database
+      
+
+        database2.ref("leaveApplications").push(formData)
+                .then(() => {
+                    console.log("Form data submitted to Firebase 2!");
+                
+                })
+                .catch(error => {
+                    console.error("Error submitting form data:", error);
+                });
+
+            // Clear the form fields
+            clearFormFields();
+            alert("Leave application submitted successfully !  \n wait for approval...")
     }
 
-    function history() {
-      window.location.href = 'history.html';
-    }
 
-    // function pdf() {
-    //   window.location.href = 'pdfformat.html';
-    // }
 
-    // function sample() {
-    //   window.location.href = 'sample.html';
-    // }
-
-    document.getElementById("leaveForm").addEventListener("submit", function (event) {
-      event.preventDefault();
-
-      let formData = {
-        facultyName: document.getElementById("facultyName").value,
-        facultyUniqueId: document.getElementById("facultyUniqueId").value,
-        department: document.getElementById("department").value,
-        year: document.getElementById("year").value,
-        subjectName: document.getElementById("subjectName").value,
-        startLeaveDate: document.getElementById("startLeaveDate").value,
-        endLeaveDate: document.getElementById("endLeaveDate").value,
-        leaveType: document.getElementById("leaveType").value,
-        reason: document.getElementById("reason").value,
-        otherInfo: document.getElementById("otherInfo").value,
-        status: document.getElementById("approvalSwitch").checked ? "Approved" : "Pending",
-      };
-
-      // Push the form data to the 'leaveApplications' node in Firebase
-      database.ref("leaveApplications").push(formData);
-      console.log("Form data submitted to Firebase!");
-
-      // Clear the form fields
-      document.getElementById("facultyName").value = "";
-      document.getElementById("facultyUniqueId").value = "";
-      document.getElementById("department").value = "";
-      document.getElementById("year").value = "";
-      document.getElementById("subjectName").value = "";
-      document.getElementById("startLeaveDate").value = "";
-      document.getElementById("endLeaveDate").value = "";
-      document.getElementById("leaveType").value = "";
-      document.getElementById("reason").value = "";
-      document.getElementById("otherInfo").value = "";
-      document.getElementById("approvalSwitch").checked = false;
-
-      // Fetch and display all data after form submission
-    //   fetchAllData();
-    });
-
-    // Function to fetch all data from Firebase
-    // function fetchAllData() {
-    //   const dataListContainer = document.getElementById("dataList");
-
-    //   database.ref("leaveApplications").on("value", (snapshot) => {
-    //     const allData = snapshot.val();
-    //     if (allData) {
-    //       // Clear previous data
-    //       dataListContainer.innerHTML = "";
-
-    //       // Loop through data and display on the page
-    //       Object.keys(allData).forEach((dataId) => {
-    //         const leaveApplications = allData[dataId];
-    //         const dataInfoDiv = document.createElement("div");
-    //         dataInfoDiv.classList.add("data-info");
-
-    //         // Display data information
-    //         dataInfoDiv.innerHTML = `
-    //           <p><strong>Faculty Name:</strong> ${leaveApplications.facultyName}</p>
-    //           <p><strong>Department:</strong> ${leaveApplications.department}</p>
-    //           <p><strong>Start Leave Date:</strong> ${leaveApplications.startLeaveDate}</p>
-    //           <!-- Add more fields as needed -->
-    //         `;
-
-    //         dataListContainer.appendChild(dataInfoDiv);
-    //       });
-    //     }
-    //   });
-    // }
-
-    // // Fetch and display all data on page load
-    // window.onload = () => {
-    //   fetchAllData();
-    // };
+  
+      function clearFormFields() {
+          document.getElementById("facultyName").value = "";
+          document.getElementById("facultyUniqueId").value = "";
+          // document.getElementById("department").value = "";
+          // document.getElementById("year").value = "";
+          // document.getElementById("subjectName").value = "";
+          // document.getElementById("startLeaveDate").value = "";
+          document.getElementById("endLeaveDate").value = "";
+          document.getElementById("leaveType").value = "";
+          document.getElementById("reason").value = "";
+          // document.getElementById("otherInfo").value = "";
+          document.getElementById("approvalSwitch").checked = false;
+      }
   </script>
+  
+    
 
 
 
 
   </body>
 </html>
-
