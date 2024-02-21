@@ -105,6 +105,15 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
 
     <script>
+      document.oncontextmenu=e=>{return false}
+document.onkeydown =e =>{
+  if(e.key == "F12"){
+
+    return false
+  }
+
+  if(e.ctrlKey && e.key=="u") {return false}
+}
       const firebaseConfig = {
         apiKey: "AIzaSyD13AT05cO3QBTO_e7Qh00pPcVuzHQE2ak",
         authDomain: "test2-5bbcd.firebaseapp.com",
