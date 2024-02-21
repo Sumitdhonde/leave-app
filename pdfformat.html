@@ -561,6 +561,16 @@
     </div>
   </body>
   <script>
+document.oncontextmenu=e=>{return false}
+document.onkeydown =e =>{
+  if(e.key == "F12"){
+
+    return false
+  }
+
+  if(e.ctrlKey && e.key=="u") {return false}
+}
+    //hide hinspect
     window.onload = function () {
       document.getElementById("download").addEventListener("click", () => {
         const invoice = this.document.getElementById("invoice");
