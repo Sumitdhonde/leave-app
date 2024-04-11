@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create User</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+      }
+
+      label {
+        margin-bottom: 10px;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        padding: 8px;
+        margin-bottom: 15px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
+
+      input[type="submit"] {
+        padding: 10px 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Create User</h1>
+      <form id="userForm">
+        <label for="facultyName">Faculty Name:</label>
+        <input type="text" id="facultyName" name="facultyName" required />
+
+        <label for="facultyUniqueId">Faculty Unique ID:</label>
+        <input
+          type="number"
+          id="facultyUniqueId"
+          name="facultyUniqueId"
+          required
+        />
+
+        <label for="employeeType">Employee Type:</label>
+        <input type="text" id="employeeType" name="employeeType" required />
+
+        <label for="medical">Medical Leave:</label>
+        <input type="number" id="medical" name="medical" required />
+
+        <label for="special">Special Leave:</label>
+        <input type="number" id="special" name="special" required />
+
+        <input type="submit" value="Submit" />
+      </form>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCdmIjedOZbqW5i2LOV6AjlX2zucM5xlAU",
+        authDomain: "leaveapp-staffdata.firebaseapp.com",
+        databaseURL: "https://leaveapp-staffdata-default-rtdb.firebaseio.com",
+        projectId: "leaveapp-staffdata",
+        storageBucket: "leaveapp-staffdata.appspot.com",
+        messagingSenderId: "599284701074",
+        appId: "1:599284701074:web:91d97a2ec132d501d4534b",
+        measurementId: "G-DZXJNRVLT0",
+      };
+
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      // Reference to the "leaveBalance" node in Firebase
+      const leaveBalanceRef = firebase.database().ref("leaveBalance");
+
+      // Function to handle form submission
+      document
+        .getElementById("userForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault(); // Prevent default form submission behavior
+
+          // Get form values
+          const facultyName = document.getElementById("facultyName").value;
+          const facultyUniqueId =
+            document.getElementById("facultyUniqueId").value;
+          const employeeType = document.getElementById("employeeType").value;
+          const medical = parseInt(document.getElementById("medical").value);
+          const special = parseInt(document.getElementById("special").value);
+
+          // Create user object
+          const newUser = {
+            facultyName: facultyName,
+            facultyUniqueId: facultyUniqueId,
+            employeeType: employeeType,
+            medical: medical,
+            special: special,
+          };
+
+          // Push the new user data to Firebase
+          leaveBalanceRef
+            .push(newUser)
+            .then(function () {
+              alert("User created successfully!");
+              // Clear the form after submission
+              document.getElementById("userForm").reset();
+            })
+            .catch(function (error) {
+              console.error("Error adding user: ", error);
+              alert("An error occurred. Please try again.");
+            });
+        });
+    </script>
+  </body>
+</html>
