@@ -83,7 +83,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
     <script>
-      // Your web app's Firebase configuration
       const firebaseConfig = {
         apiKey: "AIzaSyCdmIjedOZbqW5i2LOV6AjlX2zucM5xlAU",
         authDomain: "leaveapp-staffdata.firebaseapp.com",
@@ -115,25 +114,42 @@
           const medical = parseInt(document.getElementById("medical").value);
           const special = parseInt(document.getElementById("special").value);
 
-          // Create user object
-          const newUser = {
-            facultyName: facultyName,
-            facultyUniqueId: facultyUniqueId,
-            employeeType: employeeType,
-            medical: medical,
-            special: special,
-          };
-
-          // Push the new user data to Firebase
+          // Check if the provided faculty unique ID already exists in the database
           leaveBalanceRef
-            .push(newUser)
-            .then(function () {
-              alert("User created successfully!");
-              // Clear the form after submission
-              document.getElementById("userForm").reset();
+            .orderByChild("facultyUniqueId")
+            .equalTo(facultyUniqueId)
+            .once("value")
+            .then((snapshot) => {
+              if (snapshot.exists()) {
+                alert(
+                  "Faculty unique ID already exists. Please choose a different one."
+                );
+              } else {
+                // Create user object
+                const newUser = {
+                  facultyName: facultyName,
+                  facultyUniqueId: facultyUniqueId,
+                  employeeType: employeeType,
+                  medical: medical,
+                  special: special,
+                };
+
+                // Push the new user data to Firebase
+                leaveBalanceRef
+                  .push(newUser)
+                  .then(function () {
+                    alert("User created successfully!");
+                    // Clear the form after submission
+                    document.getElementById("userForm").reset();
+                  })
+                  .catch(function (error) {
+                    console.error("Error adding user: ", error);
+                    alert("An error occurred. Please try again.");
+                  });
+              }
             })
-            .catch(function (error) {
-              console.error("Error adding user: ", error);
+            .catch((error) => {
+              console.error("Error checking faculty unique ID: ", error);
               alert("An error occurred. Please try again.");
             });
         });
