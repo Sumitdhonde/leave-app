@@ -268,7 +268,7 @@ document.onkeydown =e =>{
         const dataRef = database1.ref("leaveBalance");
 
         try {
-            const snapshot = await dataRef.orderByChild("facultyUniqueId").equalTo(parseInt(facultyId)).once("value");
+            const snapshot = await dataRef.orderByChild("facultyUniqueId").equalTo(facultyId).once("value");
             const data = snapshot.val();
 
             if (data) {
